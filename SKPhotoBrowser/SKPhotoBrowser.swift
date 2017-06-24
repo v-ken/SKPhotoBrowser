@@ -49,7 +49,7 @@ open class SKPhotoBrowser: UIViewController {
     open weak var delegate: SKPhotoBrowserDelegate?
     
     // photos
-    var photos: [SKPhotoProtocol] = [SKPhotoProtocol]()
+    public var photos: [SKPhotoProtocol] = [SKPhotoProtocol]()
     var numberOfPhotos: Int {
         return photos.count
     }
@@ -375,6 +375,25 @@ public extension SKPhotoBrowser {
     func getCurrentPageIndex() -> Int {
         return currentPageIndex
     }
+    
+    func deleteImage() {
+        defer {
+            reloadData()
+        }
+        
+        if photos.count > 1 {
+            pagingScrollView.deleteImage()
+            
+            photos.remove(at: currentPageIndex)
+            if currentPageIndex != 0 {
+                gotoPreviousPage()
+            }
+            toolbar.updateToolbar(currentPageIndex)
+            
+        } else if photos.count == 1 {
+            dismissPhotoBrowser(animated: true)
+        }
+    }
 }
 
 
@@ -613,25 +632,6 @@ private extension SKPhotoBrowser {
             hideControlsAfterDelay()
         }
         setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    func deleteImage() {
-        defer {
-            reloadData()
-        }
-        
-        if photos.count > 1 {
-            pagingScrollView.deleteImage()
-            
-            photos.remove(at: currentPageIndex)
-            if currentPageIndex != 0 {
-                gotoPreviousPage()
-            }
-            toolbar.updateToolbar(currentPageIndex)
-            
-        } else if photos.count == 1 {
-            dismissPhotoBrowser(animated: true)
-        }
     }
 }
 
