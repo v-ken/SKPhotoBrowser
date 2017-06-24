@@ -355,6 +355,25 @@ public extension SKPhotoBrowser {
         self.photos.insert(contentsOf: photos, at: index)
         self.reloadData()
     }
+
+    func deleteImage() {
+        defer {
+            reloadData()
+        }
+        
+        if photos.count > 1 {
+            pagingScrollView.deleteImage()
+            
+            photos.remove(at: currentPageIndex)
+            if currentPageIndex != 0 {
+                gotoPreviousPage()
+            }
+            paginationView.update(currentPageIndex)
+            
+        } else if photos.count == 1 {
+            dismissPhotoBrowser(animated: true)
+        }
+    }
 }
 
 // MARK: - Internal Function
@@ -497,25 +516,6 @@ internal extension SKPhotoBrowser {
             
         } else {
             popupShare()
-        }
-    }
-    
-    func deleteImage() {
-        defer {
-            reloadData()
-        }
-        
-        if photos.count > 1 {
-            pagingScrollView.deleteImage()
-            
-            photos.remove(at: currentPageIndex)
-            if currentPageIndex != 0 {
-                gotoPreviousPage()
-            }
-            paginationView.update(currentPageIndex)
-            
-        } else if photos.count == 1 {
-            dismissPhotoBrowser(animated: true)
         }
     }
 }
