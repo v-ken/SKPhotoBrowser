@@ -23,7 +23,7 @@ class SKButton: UIButton {
     }
     var size: CGSize = CGSize(width: 44, height: 44)
     var margin: CGFloat = 5
-    var buttonTopOffset: CGFloat { return 5 }
+    var buttonTopOffset: CGFloat { return SKPhotoBrowserOptions.topBarButtonsTopOffset }
     
     func setup(_ imageName: String) {
         backgroundColor = .clear

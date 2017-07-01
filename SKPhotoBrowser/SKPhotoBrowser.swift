@@ -28,6 +28,8 @@ open class SKPhotoBrowser: UIViewController {
     fileprivate var applicationWindow: UIWindow!
     fileprivate lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     var backgroundView: UIView!
+    var topBarBackgroundView: UIView!
+    open var topBarViews: [UIView] = []
     
     var initialPageIndex: Int = 0
     var currentPageIndex: Int = 0
@@ -584,6 +586,10 @@ private extension SKPhotoBrowser {
         if !SKPhotoBrowserOptions.disableVerticalSwipe {
             view.addGestureRecognizer(panGesture)
         }
+        
+        topBarBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: 60))
+        topBarBackgroundView.backgroundColor = SKPhotoBrowserOptions.topBarColor
+        view.addSubview(topBarBackgroundView)
     }
     
     func configureCloseButton() {
@@ -614,16 +620,19 @@ private extension SKPhotoBrowser {
             animations: { () -> Void in
                 let alpha: CGFloat = hidden ? 0.0 : 1.0
                 self.toolbar.alpha = alpha
-                self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
-                
+                // Do not translate Y pos during hiding as the caption view does not follow suit
+//                self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
+
                 if SKPhotoBrowserOptions.displayCloseButton {
                     self.closeButton.alpha = alpha
-                    self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
+//                    self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
                 }
                 if SKPhotoBrowserOptions.displayDeleteButton {
                     self.deleteButton.alpha = alpha
-                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
+//                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
                 }
+                self.topBarBackgroundView.alpha = alpha
+                self.topBarViews.forEach { $0.alpha = alpha }
                 captionViews.forEach { $0.alpha = alpha }
             },
             completion: nil)

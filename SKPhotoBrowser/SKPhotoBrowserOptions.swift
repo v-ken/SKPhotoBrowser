@@ -31,6 +31,10 @@ public struct SKPhotoBrowserOptions {
     public static var enableSingleTapDismiss: Bool = false
     
     public static var backgroundColor: UIColor = .black
+    public static var topBarColor: UIColor = .clear
+    public static var bottomBarColor: UIColor = .clear
+    
+    public static var topBarButtonsTopOffset: CGFloat = 5
 }
 
 public struct SKCaptionOptions {

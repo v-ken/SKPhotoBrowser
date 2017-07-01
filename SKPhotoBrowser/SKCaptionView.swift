@@ -71,7 +71,8 @@ private extension SKCaptionView {
     func setup() {
         isOpaque = false
         autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
-        
+        backgroundColor = SKPhotoBrowserOptions.bottomBarColor
+
         // setup photoLabel
         setupPhotoLabel()
     }
