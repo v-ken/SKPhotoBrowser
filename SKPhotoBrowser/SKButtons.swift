@@ -23,7 +23,7 @@ class SKButton: UIButton {
         }
     }
     fileprivate let size: CGSize = CGSize(width: 44, height: 44)
-    fileprivate let buttonTopOffset: CGFloat = 30
+    fileprivate var buttonTopOffset: CGFloat { return SKPhotoBrowserOptions.topBarButtonsTopOffset }
     fileprivate var margin: CGFloat = SKPhotoBrowserOptions.closeAndDeleteButtonPadding
 
     func setup(_ imageName: String) {

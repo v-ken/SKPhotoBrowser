@@ -32,6 +32,10 @@ open class SKPhotoBrowser: UIViewController {
     fileprivate var activityViewController: UIActivityViewController!
     fileprivate var panGesture: UIPanGestureRecognizer?
 
+    // tool for controls
+    var topBarBackgroundView: UIView!
+    open var topBarViews: [UIView] = []
+    
     // for status check property
     fileprivate var isEndAnimationByToolBar: Bool = true
     fileprivate var isViewActive: Bool = false
@@ -547,6 +551,10 @@ private extension SKPhotoBrowser {
         if let panGesture = panGesture {
             view.addGestureRecognizer(panGesture)
         }
+        
+        topBarBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: 60))
+        topBarBackgroundView.backgroundColor = SKPhotoBrowserOptions.topBarColor
+        view.addSubview(topBarBackgroundView)
     }
     
     func configureActionView() {
