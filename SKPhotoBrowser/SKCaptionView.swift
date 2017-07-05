@@ -27,8 +27,13 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+protocol SKCaptionViewDelegate: class {
+    func captionTapped(_ sender: SKCaptionView)
+}
 
 open class SKCaptionView: UIView {
+    weak var delegate: SKCaptionViewDelegate?
+    
     fileprivate var photo: SKPhotoProtocol?
     fileprivate var photoLabel: UILabel!
     fileprivate var photoLabelPadding: CGFloat = 10
@@ -90,7 +95,15 @@ private extension SKCaptionView {
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         photoLabel.text = photo?.caption
+        // Gestures
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(photoLabelTapAction))
+        photoLabel.isUserInteractionEnabled = true
+        photoLabel.addGestureRecognizer(tapGesture)
         addSubview(photoLabel)
+    }
+    
+    @objc func photoLabelTapAction() {
+        delegate?.captionTapped(self)
     }
 }
 

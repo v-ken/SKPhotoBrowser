@@ -10,6 +10,8 @@ import Foundation
 
 @objc public protocol SKPhotoBrowserDelegate {
     
+    @objc optional func captionTappedAtIndex(_ index: Int)
+    
     /**
      Tells the delegate that the browser started displaying a new photo
      

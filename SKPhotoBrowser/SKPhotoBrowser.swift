@@ -578,6 +578,7 @@ private extension SKPhotoBrowser {
         applicationWindow.addSubview(backgroundView)
         
         pagingScrollView.delegate = self
+        pagingScrollView.photoCaptionDelegate = self
         view.addSubview(pagingScrollView)
         
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(SKPhotoBrowser.panGestureRecognized(_:)))
@@ -678,5 +679,11 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         isEndAnimationByToolBar = true
+    }
+}
+
+extension SKPhotoBrowser: SKCaptionViewDelegate {
+    func captionTapped(_ sender: SKCaptionView) {
+        delegate?.captionTappedAtIndex?(currentPageIndex)
     }
 }
