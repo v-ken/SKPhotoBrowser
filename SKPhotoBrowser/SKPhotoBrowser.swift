@@ -538,6 +538,7 @@ private extension SKPhotoBrowser {
     
     func configurePagingScrollView() {
         pagingScrollView.delegate = self
+        pagingScrollView.photoCaptionDelegate = self
         view.addSubview(pagingScrollView)
     }
 
@@ -622,5 +623,11 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         isEndAnimationByToolBar = true
+    }
+}
+
+extension SKPhotoBrowser: SKCaptionViewDelegate {
+    func captionTapped(_ sender: SKCaptionView) {
+        delegate?.captionTappedAtIndex?(currentPageIndex)
     }
 }

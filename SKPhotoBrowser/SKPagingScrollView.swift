@@ -13,6 +13,8 @@ class SKPagingScrollView: UIScrollView {
     fileprivate let sideMargin: CGFloat = 10
     fileprivate var visiblePages: [SKZoomingScrollView] = []
     fileprivate var recycledPages: [SKZoomingScrollView] = []
+    weak var photoCaptionDelegate: SKCaptionViewDelegate?
+
     fileprivate weak var browser: SKPhotoBrowser?
 
     var numberOfPhotos: Int {
@@ -155,6 +157,7 @@ class SKPagingScrollView: UIScrollView {
             if let captionView: SKCaptionView = createCaptionView(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
                 captionView.alpha = browser.areControlsHidden() ? 0 : 1
+                captionView.delegate = self
                 addSubview(captionView)
                 // ref val for control
                 page.captionView = captionView
@@ -246,3 +249,8 @@ private extension SKPagingScrollView {
     }
 }
 
+extension SKPagingScrollView: SKCaptionViewDelegate {
+    func captionTapped(_ sender: SKCaptionView) {
+        photoCaptionDelegate?.captionTapped(sender)
+    }
+}
