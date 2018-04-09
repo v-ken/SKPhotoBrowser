@@ -586,6 +586,16 @@ private extension SKPhotoBrowser {
         // action view animation
         actionView.animate(hidden: hidden)
         
+        // Other top bar views
+        UIView.animate(withDuration: 0.35,
+                       animations: { () -> Void in
+                        let alpha: CGFloat = hidden ? 0.0 : 1.0
+                        self.toolbar.alpha = alpha
+                        self.topBarBackgroundView.alpha = alpha
+                        self.topBarViews.forEach { $0.alpha = alpha }
+                        
+        }, completion: nil)
+        
         if !permanent {
             hideControlsAfterDelay()
         }
